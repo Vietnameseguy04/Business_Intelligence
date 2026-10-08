@@ -26,8 +26,8 @@
 // ---- Document metadata ---- //
 #let config = (
   doc-type:          doc-type,
-  title:             "Operationelles IBCS-Dashboard mit Power BI",
-  subtitle:          "Projektcontrolling eines Kameraproduzenten",
+  title:             [Operationelles Power-BI-Dashboard im \ Projektcontrolling],
+  subtitle:          [Konzeption, Datenmodellierung und IBCS-orientierte \ Visualisierung am Beispiel eines fiktiven Kameraherstellers],
   author:            "Anton Nguyen",
   mat-number:        "5282932",
   course:            "WWIBE224",
