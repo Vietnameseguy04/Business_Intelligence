@@ -63,15 +63,15 @@ Für das vorliegende Dashboard wurde dennoch bewusst eine relationale Struktur g
 
 #text(size: 13pt, weight: "bold")[Import und Datenaufbereitung]
 
-Die Excel-Datei wurde zunächst in Power BI importiert, wobei nur die für das entwickelte Datenmodell relevanten Tabellen ausgewählt wurden. Im Anschluss daran wurden die Datentypen geprüft und angepasst. IDs wurden als Text definiert, da sie als Bezeichner dienen und keine arithmetischen Operationen darauf ausgeführt werden sollen. Datumsfelder wurden als Datumstyp gesetzt, damit Power BI sie korrekt für zeitliche Filterungen erkennt. Stunden und Mengen wurden als Ganzzahlen definiert, da keine Nachkommastellen benötigt werden. Geldbeträge wurden als Dezimalzahlen gespeichert.
+Die Excel-Datei wurde zunächst in Power BI importiert, wobei nur die für das entwickelte Datenmodell relevanten Tabellen ausgewählt wurden. Im Anschluss daran wurden die Datentypen geprüft und angepasst. IDs wurden als Text definiert, da sie als Bezeichner dienen und keine arithmetischen Operationen darauf ausgeführt werden sollen. Datumsfelder wurden als Datumstyp gesetzt, damit Power BI sie korrekt für zeitliche Filterungen erkennt. Stunden und Mengen wurden als Ganzzahlen definiert, da keine Nachkommastellen benötigt werden. Geldbeträge wurden als Dezimalzahlen gespeichert. Zwar wäre es technisch möglich gewesen, alle Felder einheitlich als Text zu importieren, dies hätte jedoch zeitliche Filterungen und arithmetische Berechnungen in DAX erheblich erschwert oder gänzlich verhindert.
 
-Die Geldbeträge wurden bewusst zunächst als numerische Dezimalwerte gespeichert. Die Darstellung als Euro-Werte erfolgt erst auf Ebene der Visualisierung, damit die Werte für Berechnungen in DAX uneingeschränkt geeignet bleiben.
+Die Geldbeträge wurden bewusst zunächst als numerische Dezimalwerte gespeichert. Die Darstellung als Euro-Werte erfolgt erst auf Ebene der Visualisierung, damit die Werte für Berechnungen in DAX uneingeschränkt geeignet bleiben. Zwar hätte die Datenbasis auch als CSV-Dateien bereitgestellt werden können, was einen direkteren Import ohne Formatierungsabhängigkeiten ermöglicht hätte. Excel wurde jedoch gewählt, da es mehrere miteinander verknüpfte Tabellen in einer einzigen Datei bündelt und damit die Übersicht über die Gesamtstruktur der Datenbasis erleichtert.
 
 #text(size: 13pt, weight: "bold")[Aufbau der Beziehungen]
 
-Nach dem Import wurden die Tabellen über Beziehungen miteinander verbunden. Alle Beziehungen folgen dabei dem Prinzip der 1:n-Kardinalität, bei dem ein Datensatz auf der Eins-Seite mehreren Datensätzen auf der n-Seite gegenübersteht. So ist beispielsweise ein Projekt in tbl_Projekte mit mehreren Einträgen in tbl_Kosten verknüpft, da für ein einzelnes Projekt unterschiedliche Perioden, Kostenarten und Szenarien erfasst werden. Die zentrale Beziehung zwischen Projekten und Kosten wurde über die Projekt-ID hergestellt. Dabei fungiert tbl_Projekte auf der Eins-Seite als Stammdatentabelle, während tbl_Kosten auf der n-Seite die zugehörigen Bewegungsdaten enthält.
+Nach dem Import wurden die Tabellen über Beziehungen miteinander verbunden. Alle Beziehungen folgen dabei dem Prinzip der 1:n-Kardinalität, bei dem ein Datensatz auf der Eins-Seite mehreren Datensätzen auf der n-Seite gegenübersteht. So ist beispielsweise ein Projekt in tbl_Projekte mit mehreren Einträgen in tbl_Kosten verknüpft, da für ein einzelnes Projekt unterschiedliche Perioden, Kostenarten und Szenarien erfasst werden. Die zentrale Beziehung zwischen Projekten und Kosten wurde über die Projekt-ID hergestellt. Dabei fungiert tbl_Projekte auf der Eins-Seite als Stammdatentabelle, während tbl_Kosten auf der n-Seite die zugehörigen Bewegungsdaten enthält. n:m-Beziehungen wurden dabei bewusst vermieden, da Power BI diese nicht direkt unterstützt und sie eine zusätzliche Brückentabelle erfordert hätten, was die Modellkomplexität ohne erkennbaren Mehrwert für das vorliegende Dashboard erhöht hätte.
 
-Weitere Beziehungen wurden zwischen Kostenarten und Kosten, zwischen Szenarien und Kosten, zwischen Kalender und Kosten sowie zwischen Projektleitern und Projekten hergestellt. Zusätzlich wurden Projekten und den Tabellen für Meilensteine, Ressourcen und Risiken jeweils eigene Beziehungen zugewiesen. Durch diese Struktur können Filter aus den Stammdatentabellen auf die jeweiligen Bewegungsdaten übertragen werden. Eine tabellarische Übersicht aller neun Beziehungen findet sich in Anhang A3. @fig-datenmodell zeigt das vollständige Datenmodell mit allen Tabellen und Beziehungen.
+Weitere Beziehungen wurden zwischen Kostenarten und Kosten, zwischen Szenarien und Kosten, zwischen Kalender und Kosten, zwischen Kalender und Ressourcen sowie zwischen Projektleitern und Projekten hergestellt. Zusätzlich wurden Projekten und den Tabellen für Meilensteine, Ressourcen und Risiken jeweils eigene Beziehungen zugewiesen. Durch diese Struktur können Filter aus den Stammdatentabellen auf die jeweiligen Bewegungsdaten übertragen werden. Eine tabellarische Übersicht aller neun Beziehungen findet sich in Anhang A3. @fig-datenmodell zeigt das vollständige Datenmodell mit allen Tabellen und Beziehungen.
 
 #figure(
   image("../images/anhang-datenmodell-beziehungen.png", width: 100%),
@@ -80,7 +80,7 @@ Weitere Beziehungen wurden zwischen Kostenarten und Kosten, zwischen Szenarien u
 
 #text(size: 13pt, weight: "bold")[Verwendung einer Kalendertabelle]
 
-Für die zeitliche Analyse wurde eine separate Kalendertabelle verwendet. Gegenüber einer direkten Ableitung von Zeitattributen aus den Bewegungsdaten bietet eine solche Tabelle den Vorteil, eine vollständige und lückenlose Zeitstruktur bereitzustellen. Dadurch lassen sich Monats-, Quartals- und Jahresauswertungen innerhalb des Datenmodells einheitlich und konsistent durchführen. Die Kalendertabelle enthält neben dem eigentlichen Datum auch Jahr, Monat, Monatsname, Quartal und Kalenderwoche. Auf dieser Grundlage konnte die Kostenentwicklung im Dashboard einheitlich auf Monatsebene dargestellt werden.
+Für die zeitliche Analyse wurde eine separate Kalendertabelle verwendet. Gegenüber einer direkten Ableitung von Zeitattributen aus den Bewegungsdaten bietet eine solche Tabelle den Vorteil, eine vollständige und lückenlose Zeitstruktur bereitzustellen. Dadurch lassen sich Monats-, Quartals- und Jahresauswertungen innerhalb des Datenmodells einheitlich und konsistent durchführen. Die Kalendertabelle enthält neben dem eigentlichen Datum auch Jahr, Monat, Monatsname, Quartal und Kalenderwoche. Auf dieser Grundlage konnte die Kostenentwicklung im Dashboard einheitlich auf Monatsebene dargestellt werden. Zwar erhöht eine separate Kalendertabelle die Anzahl der Tabellen im Datenmodell, sie stellt jedoch sicher, dass auch Monate ohne Kostenbuchungen lückenlos in der Zeitreihenanalyse erscheinen, was bei einer direkten Ableitung der Zeitattribute aus tbl_Kosten nicht gewährleistet wäre.
 
 = Entwicklung der Kennzahlen
 
@@ -94,7 +94,7 @@ Das *Gesamtbudget* ergibt sich aus der Summe aller für die Projekte vorgesehene
 Gesamtbudget = SUM(tbl_Projekte[Budget])
 ```
 
-Die *Plan-Kosten* bilden die geplanten Kosten ab, indem die Kostentabelle auf das Szenario „PLAN" gefiltert wird. Entsprechend zeigen die *Ist-Kosten* die tatsächlich erfassten Kosten auf Basis des Szenarios „IST".
+Die *Plan-Kosten* bilden die geplanten Kosten ab, indem die Kostentabelle auf das Szenario „PLAN“ gefiltert wird. Entsprechend zeigen die *Ist-Kosten* die tatsächlich erfassten Kosten auf Basis des Szenarios „IST“. Alternativ hätten Plan-, Ist- und Forecast-Kosten als separate Spalten in tbl_Kosten gespeichert werden können, was einfachere SUM-Berechnungen ermöglicht hätte. Dieser Ansatz würde jedoch die Flexibilität einschränken, da neue Szenarien eine strukturelle Änderung des Datenmodells erfordern würden. CALCULATE mit Szenario-Filter hingegen erlaubt eine dynamische Steuerung ohne Modellanpassung.
 
 ```dax
 Plan-Kosten =
@@ -122,6 +122,8 @@ Kostenabweichung = [Ist-Kosten] - [Plan-Kosten]
 Kostenabweichung % =
 DIVIDE([Kostenabweichung], [Plan-Kosten])
 ```
+
+Für die Darstellung als KPI-Karte auf dem Dashboard wurde die absolute Variante gewählt. Zwar liefert die prozentuale Abweichung eine relativierende Einschätzung unabhängig von der Projektgröße, sie erschwert jedoch die unmittelbare Einschätzung der tatsächlichen Kostenwirkung, da ein hoher Prozentsatz bei kleinem Budget weniger kritisch sein kann als ein niedriger Prozentsatz bei großem Projektbudget. Die absolute Abweichung gibt dem Management daher den direkteren Steuerungsimpuls.
 
 Der *Budgetverbrauch* beschreibt den Anteil des Gesamtbudgets, der bereits durch Ist-Kosten beansprucht wurde.
 
@@ -190,7 +192,7 @@ CALCULATE(
 
 Für die erste Managementseite wurden fünf Kennzahlen als prominente KPI-Karten ausgewählt, nämlich Gesamtbudget, Ist-Kosten, Forecast-Kosten, Kostenabweichung und die Anzahl kritischer Projekte. Diese Kennzahlen beantworten unmittelbar die zentralen Steuerungsfragen des Projektcontrollings. Welches Budget steht zur Verfügung? Wie hoch sind die tatsächlich angefallenen Kosten? Wie entwickeln sich die erwarteten Kosten laut Forecast? Wie groß ist die aktuelle Kostenabweichung, und wie viele Projekte sind bereits kritisch?
 
-Weitere berechnete Measures wie Budgetverbrauch %, Durchschnittlicher Fortschritt, Durchschnittliche Terminabweichung oder Verspätete Projekte wurden bewusst nicht auf der Managementseite platziert. Sie liefern ergänzende Informationen, würden gleichzeitig jedoch die Übersichtlichkeit der ersten Managementebene erhöhen und sind eher für weiterführende Detailanalysen geeignet. Die Auswahl folgt damit dem Grundsatz, auf der Managementebene zunächst die wichtigsten Steuerungsinformationen bereitzustellen und Detailinformationen nicht mit der Gesamtübersicht zu vermischen.
+Weitere berechnete Measures wie Budgetverbrauch %, Durchschnittlicher Fortschritt, Durchschnittliche Terminabweichung oder Verspätete Projekte wurden bewusst nicht auf der Managementseite platziert. Sie liefern ergänzende Informationen, würden die Übersicht der ersten Managementebene jedoch beeinträchtigen und sind eher für weiterführende Detailanalysen geeignet. Die Auswahl folgt damit dem Grundsatz, auf der Managementebene zunächst die wichtigsten Steuerungsinformationen bereitzustellen und Detailinformationen nicht mit der Gesamtübersicht zu vermischen.
 
 = Umsetzung des Power-BI-Dashboards
 
@@ -205,7 +207,7 @@ Die erste Berichtseite wurde als „Management Board" bezeichnet und trägt die 
 
 *KPI-Karten*
 
-Prominent dargestellt werden Gesamtbudget, Ist-Kosten, Forecast-Kosten, Kostenabweichung und die Anzahl kritischer Projekte. Für diese fünf Kennzahlen wurde bewusst das KPI-Karten-Visual gewählt, da es absolute Werte unmittelbar lesbar macht, ohne dass zunächst eine Achse oder ein Diagramm interpretiert werden muss. Die monetären Werte werden auf den Karten im Euro-Format angezeigt, wobei die Formatierung auf Ebene der Visualisierung erfolgt und die zugrundeliegenden Dezimalwerte für DAX-Berechnungen unverändert bleiben.
+Prominent dargestellt werden Gesamtbudget, Ist-Kosten, Forecast-Kosten, Kostenabweichung und die Anzahl kritischer Projekte. Für diese fünf Kennzahlen wurde bewusst das KPI-Karten-Visual gewählt, da es absolute Werte unmittelbar lesbar macht, ohne dass zunächst eine Achse oder ein Diagramm interpretiert werden muss. Die monetären Werte werden auf den Karten im Euro-Format angezeigt, wobei die Formatierung auf Ebene der Visualisierung erfolgt und die zugrundeliegenden Dezimalwerte für DAX-Berechnungen unverändert bleiben. Tacho- oder Gauge-Visuals wären als Alternative denkbar gewesen, wurden jedoch verworfen, da sie dekorative Gestaltungselemente einführen und damit dem IBCS-orientierten Ansatz widersprechen.
 
 *Zeitliche Kostenentwicklung*
 
@@ -223,8 +225,9 @@ Bei der Gestaltung wurde eine Schwarz/Weiß-orientierte Darstellung gewählt. Au
 
 *Grundgedanke*
 
-Das Dashboard folgt einem IBCS-orientierten Gestaltungsansatz und orientiert sich dabei auch am Konzept des Reporting-Hauses von Horváth & Partner. Dieses Rahmenwerk beschreibt, wie Managementberichte hierarchisch aufgebaut sein sollten, von operativen Detaildaten bis zur strategischen Übersicht. Das entwickelte Management Board entspricht der obersten Ebene dieses Modells. Es liefert eine kompakte Übersicht für Entscheidungsträger, ohne operative Detaildaten einzubeziehen. Beim IBCS-Ansatz steht nicht die vollständige Einhaltung aller Regeln des International Business Communication Standards im Vordergrund, sondern die Anwendung ausgewählter Gestaltungsprinzipien, die sich auf die vorliegende Managementübersicht sinnvoll übertragen ließen. Im Vordergrund stehen eine reduzierte Farbgebung, der Verzicht auf dekorative Elemente sowie eine kompakte Seitenstruktur.
+Das Dashboard folgt einem IBCS-orientierten Gestaltungsansatz und orientiert sich dabei auch am Konzept des Reporting-Hauses von Horváth & Partner. Dieses Rahmenwerk strukturiert die zentralen Gestaltungsfaktoren des Management-Reportings in vier Dimensionen, nämlich Berichtsobjekte und -empfänger, Berichtsinhalte, Visualisierung und Präsentation sowie Prozesse und Organisation. Übergreifend gibt dabei eine Steuerungslogik den Rahmen vor, während Instrumente und IT-Systeme das Fundament bilden. Für das entwickelte Dashboard sind insbesondere zwei dieser Dimensionen relevant, da sowohl die Auswahl geeigneter KPIs als auch die konsequente Ausrichtung der Visualisierung auf Informationsklarheit im Vordergrund standen. Beim IBCS-Ansatz steht dabei nicht die vollständige Einhaltung aller Regeln des International Business Communication Standards im Vordergrund, sondern die Anwendung ausgewählter Gestaltungsprinzipien, die sich auf die vorliegende Managementübersicht sinnvoll übertragen ließen. Im Vordergrund stehen eine reduzierte Farbgebung, der Verzicht auf dekorative Elemente sowie eine kompakte Seitenstruktur.
 
+#pagebreak()
 *Anwendung auf das entwickelte Dashboard*
 
 Konkret wurde auf die Power-BI-Standardfarben wie Blau und Orange vollständig verzichtet. Alle Diagramme und KPI-Karten wurden in einer einheitlichen Schwarz/Weiß-Darstellung gestaltet, sodass die Aufmerksamkeit auf den dargestellten Werten und Abweichungen liegt und nicht auf der Farbgestaltung.
@@ -232,3 +235,13 @@ Konkret wurde auf die Power-BI-Standardfarben wie Blau und Orange vollständig v
 Darüber hinaus wurde auf dekorative Elemente wie Hintergrundfüllungen, Rahmen oder grafische Verzierungen verzichtet. Die Managementseite beschränkt sich bewusst auf die für die Steuerung relevanten Elemente, nämlich fünf KPI-Karten, das Liniendiagramm zur zeitlichen Kostenentwicklung und das Balkendiagramm zum Projektvergleich.
 
 Damit wurde eine kompakte Managementübersicht geschaffen, die ohne Ablenkung durch Gestaltungselemente auskommt und sich an den Prinzipien einer reduzierten, informationsorientierten Darstellung orientiert.
+
+#text(size: 13pt, weight: "bold")[Dashboardauswertung]
+
+Das entwickelte Dashboard liefert einen unmittelbaren Überblick über den Steuerungszustand des Projektportfolios der CamTech GmbH. So beträgt das Gesamtbudget 75,41 Mio. Euro, während die bisherigen Ist-Kosten 51,98 Mio. Euro umfassen. Die daraus resultierende Kostenabweichung von -23,42 Mio. Euro zeigt, dass die bisher angefallenen Kosten unter dem Planbudget liegen. Ergänzend dazu weist das Dashboard drei kritische Projekte aus, und die Forecast-Kosten von 36,06 Mio. Euro unterstützen eine vorausschauende Steuerung.
+
+Das Balkendiagramm differenziert dieses Gesamtbild auf Einzelprojektebene. Die CT-Z7 Spiegellose Vollformatkamera sowie die Kameraplattform Gen-3 weisen dabei die größten negativen Abweichungen auf, was auf Verzögerungen oder eine langsamere Umsetzung hindeuten kann. Demgegenüber zeigt das Projekt Standardzoom 24-70 mm f/2.8 eine leicht positive Abweichung und ist daher gesondert zu beobachten.
+
+Das Liniendiagramm veranschaulicht ergänzend die Verläufe von Plan-, Ist- und Forecast-Kosten auf Monatsebene. Die Plan-Kosten verlaufen stabil bei rund sechs bis sieben Mio. Euro pro Monat, während die Ist-Kosten von Januar bis August ansteigen und ab September zurückgehen, da für die verbleibenden Monate noch keine abgeschlossenen Werte vorliegen. Der Forecast-Verlauf ermöglicht es dem Management, frühzeitig gegenzusteuern, sofern sich der Gesamttrend ungünstig entwickelt.
+
+Insgesamt liefert das Dashboard damit eine kompakte Entscheidungsgrundlage, die sowohl eine Portfolioübersicht als auch eine projektspezifische Analyse ermöglicht.

@@ -2,9 +2,7 @@
 
 #text(size: 13pt, weight: "bold")[Ergebnis der Umsetzung]
 
-Das entwickelte Dashboard erfüllt die in Kapitel 2 abgeleiteten Anforderungen. Projekte, Budgets und Kosten bilden die zentrale Datenbasis für das Projektcontrolling der CamTech GmbH. Die Anforderung an Managementorientierung wurde durch eine kompakte KPI-Auswahl umgesetzt, sodass Gesamtbudget, Ist-Kosten, Forecast-Kosten, Kostenabweichung und die Anzahl kritischer Projekte direkt erfassbar sind. Der Plan/Ist-Vergleich sowie die Forecast-Betrachtung sind im Liniendiagramm zur zeitlichen Kostenentwicklung abgebildet. Die Abweichungsanalyse und der Projektvergleich werden durch das Balkendiagramm zur Kostenabweichung je Projekt abgedeckt. Die zeitliche Entwicklung ist auf Monatsebene dargestellt, und kritische Projekte werden als eigene Kennzahl ausgewiesen. Die IBCS-Orientierung wurde durch eine Schwarz/Weiß-Gestaltung und einen reduzierten Seitenaufbau umgesetzt.
-
-Die technische Umsetzung basiert auf einem relationalen Datenmodell mit neun verbundenen Tabellen. Durch die Verwendung von Measures werden die für das Dashboard benötigten Kennzahlen dynamisch aus den zugrunde liegenden Daten berechnet.
+Das entwickelte Dashboard erfüllt die in Kapitel 2 definierten Anforderungen. Die fünf KPI-Karten stellen Gesamtbudget, Ist-Kosten, Forecast-Kosten, Kostenabweichung und kritische Projekte kompakt bereit und decken damit die zentralen Steuerungsfragen des Projektcontrollings ab. Das Liniendiagramm bildet Plan, Ist und Forecast auf Monatsebene ab, während das Balkendiagramm projektspezifische Abweichungen direkt vergleichbar macht. Die IBCS-orientierte Schwarz/Weiß-Gestaltung sowie der reduzierte Seitenaufbau stellen sicher, dass die Managementübersicht ohne visuelle Ablenkung auskommt.
 
 #text(size: 13pt, weight: "bold")[Zusammenfassung]
 
