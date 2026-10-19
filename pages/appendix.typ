@@ -69,10 +69,11 @@
     #image("../images/excel-kalender.png", width: 80%)
 
     // ---- A3: Datenmodell ---- //
+    #pagebreak()
     #heading(level: 2, numbering: none)[A3: Datenmodell]
 
     #figure(
-      image("../images/anhang-datenmodell-beziehungen.png", width: 100%),
+      image("../images/anhang-datenmodell-beziehungen.png", width: 96%),
       caption: [Power-BI-Modellansicht des Datenmodells],
     ) <fig-datenmodell-powerbi>
 
