@@ -72,6 +72,11 @@
     #heading(level: 2, numbering: none)[A3: Datenmodell]
 
     #figure(
+      image("../images/anhang-datenmodell-beziehungen.png", width: 100%),
+      caption: [Power-BI-Modellansicht des Datenmodells],
+    ) <fig-datenmodell-powerbi>
+
+    #figure(
       image("../images/anhang-beziehungen-liste.png", width: 80%),
       caption: [Beziehungsübersicht des Power-BI-Datenmodells],
     ) <fig-beziehungen-liste>

@@ -71,11 +71,11 @@ Die Geldbeträge wurden bewusst zunächst als numerische Dezimalwerte gespeicher
 
 Nach dem Import wurden die Tabellen über Beziehungen miteinander verbunden. Alle Beziehungen folgen dabei dem Prinzip der 1:n-Kardinalität, bei dem ein Datensatz auf der Eins-Seite mehreren Datensätzen auf der n-Seite gegenübersteht. So ist beispielsweise ein Projekt in tbl_Projekte mit mehreren Einträgen in tbl_Kosten verknüpft, da für ein einzelnes Projekt unterschiedliche Perioden, Kostenarten und Szenarien erfasst werden. Die zentrale Beziehung zwischen Projekten und Kosten wurde über die Projekt-ID hergestellt. Dabei fungiert tbl_Projekte auf der Eins-Seite als Stammdatentabelle, während tbl_Kosten auf der n-Seite die zugehörigen Bewegungsdaten enthält. n:m-Beziehungen wurden dabei bewusst vermieden, da Power BI diese nicht direkt unterstützt und sie eine zusätzliche Brückentabelle erfordert hätten, was die Modellkomplexität ohne erkennbaren Mehrwert für das vorliegende Dashboard erhöht hätte.
 
-Weitere Beziehungen wurden zwischen Kostenarten und Kosten, zwischen Szenarien und Kosten, zwischen Kalender und Kosten, zwischen Kalender und Ressourcen sowie zwischen Projektleitern und Projekten hergestellt. Zusätzlich wurden Projekten und den Tabellen für Meilensteine, Ressourcen und Risiken jeweils eigene Beziehungen zugewiesen. Durch diese Struktur können Filter aus den Stammdatentabellen auf die jeweiligen Bewegungsdaten übertragen werden. Eine tabellarische Übersicht aller neun Beziehungen findet sich in Anhang A3. @fig-datenmodell zeigt das vollständige Datenmodell mit allen Tabellen und Beziehungen.
+Weitere Beziehungen wurden zwischen Kostenarten und Kosten, zwischen Szenarien und Kosten, zwischen Kalender und Kosten, zwischen Kalender und Ressourcen sowie zwischen Projektleitern und Projekten hergestellt. Zusätzlich wurden Projekten und den Tabellen für Meilensteine, Ressourcen und Risiken jeweils eigene Beziehungen zugewiesen. Durch diese Struktur können Filter aus den Stammdatentabellen auf die jeweiligen Bewegungsdaten übertragen werden. Eine tabellarische Übersicht aller neun Beziehungen sowie die Power-BI-Modellansicht finden sich in Anhang A3. @fig-datenmodell zeigt das vollständige Datenmodell mit allen Tabellen, Attributen und Beziehungen.
 
 #figure(
-  image("../images/anhang-datenmodell-beziehungen.png", width: 100%),
-  caption: [Datenmodell des Power-BI-Projektcontrollings der CamTech GmbH],
+  image("../images/datenmodell-er.png", width: 100%),
+  caption: [Relationales Datenmodell des Power-BI-Projektcontrollings der CamTech GmbH],
 ) <fig-datenmodell>
 
 #text(size: 13pt, weight: "bold")[Verwendung einer Kalendertabelle]
