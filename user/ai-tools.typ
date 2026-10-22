@@ -10,7 +10,7 @@
   ),
   ("ChatGPT (OpenAI)",
     (
-      [Vorschläge zur Umformulierung einzelner Sätze und Textpassagen der schriftlichen Ausarbeitung (gesamt)],
+      [Unterstützung bei der Entwicklung und Überprüfung von DAX-Measures in Power BI (Kapitel 5)],
       [Anleitung zu ersten Schritten mit Microsoft Power BI sowie Tipps zur Anwendung bei der Umsetzung des Dashboards (Kapitel 4–6)],
     ),
   ),
