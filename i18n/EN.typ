@@ -67,7 +67,9 @@
   appendix-ai-heading: "A1: Overview of AI Tools Used",
   appendix-ai-caption: "Overview of the use of AI-based tools",
   appendix-ai-col1:    "Tool",
-  appendix-ai-col2:    "Description of Use",
+  appendix-ai-col2:    "Prompt (approximate)",
+  appendix-ai-col3:    "Purpose",
+  appendix-ai-col4:    "Page Reference",
 
   // ---- AI declaration (pages/ai-declaration.typ) ---- //
   ai-declaration-title: "Declaration and Usage Documentation on the Use of AI-Based Tools in the Preparation of Academic Work as Examination Performance",

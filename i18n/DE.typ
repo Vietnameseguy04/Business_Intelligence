@@ -69,7 +69,9 @@
   appendix-ai-heading: "A5: Übersicht eingesetzter KI-Werkzeuge",
   appendix-ai-caption: "Übersicht über die Nutzung von KI-basierten Werkzeugen",
   appendix-ai-col1:    "Werkzeug",
-  appendix-ai-col2:    "Beschreibung der Nutzung",
+  appendix-ai-col2:    "Prompt (sinngemäß)",
+  appendix-ai-col3:    "Einsatzzweck",
+  appendix-ai-col4:    "Seitenreferenz",
 
   // ---- AI declaration (pages/ai-declaration.typ) ---- //
   ai-declaration-title: "Erklärung und Nutzungsdokumentation zum Einsatz von KI-basierten Werkzeugen bei der Anfertigung von wissenschaftlichen Arbeiten als Prüfungsleistungen",

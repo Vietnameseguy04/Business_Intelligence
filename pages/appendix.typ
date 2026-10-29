@@ -129,23 +129,25 @@
       supplement: labels.supplement-table,
       caption: [#labels.appendix-ai-caption],
       table(
-        columns: (3.8cm, 1fr),
+        columns: (2.8cm, 1fr, 3cm, 2.4cm),
         stroke: 0.5pt,
         inset: (x: 6pt, y: 5pt),
-        align: (left + top, left + top),
+        align: (left + top, left + top, left + top, left + top),
         table.header(
           strong[#labels.appendix-ai-col1],
           strong[#labels.appendix-ai-col2],
+          strong[#labels.appendix-ai-col3],
+          strong[#labels.appendix-ai-col4],
         ),
-        ..for (name, items) in ai-tools {
-          (
-            name,
-            {
-              set list(indent: 0pt, body-indent: 0.5em, spacing: 0.3em)
-              set par(leading: 0.55em)
-              list(..items)
-            },
-          )
+        ..for (name, entries) in ai-tools {
+          let n = entries.len()
+          for (i, (prompt, purpose, page-ref)) in entries.enumerate() {
+            if i == 0 {
+              (table.cell(rowspan: n)[#name], prompt, purpose, page-ref)
+            } else {
+              (prompt, purpose, page-ref)
+            }
+          }
         }
       ),
     ) <ai-tools>
