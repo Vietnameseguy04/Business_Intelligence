@@ -11,7 +11,7 @@
 #let margin = (left: 2.5cm, right: 2.5cm, top: 2.5cm, bottom: 2cm)
 #let header-ascent = 0.8cm   // space reserved for the header within the top margin
 #let logo-path = "../images/dhbw-logo.png"
-#let font = "Arial"          // base font; must be installed on the system
+#let font = "New Computer Modern"
 
 // Page components
 #import "pages/title-page.typ": title-page
